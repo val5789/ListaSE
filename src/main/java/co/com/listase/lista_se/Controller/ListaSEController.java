@@ -114,7 +114,7 @@ public class ListaSEController {
                 "actualizado exitosamente", HttpStatus.OK);
     }
 
-    @GetMapping(path = "/cityreport")
+    @GetMapping(path = "/report")
     public ResponseEntity<ResponseDTO> cityReport(){
         Object output = null;
         try {
@@ -129,7 +129,7 @@ public class ListaSEController {
         }
     }
 
-    @GetMapping(path="/test")
+    @GetMapping(path="/getcities")
     public ResponseEntity<ResponseDTO> getCities(){
         return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
                 listaSEService.getCities(),null),HttpStatus.OK);
