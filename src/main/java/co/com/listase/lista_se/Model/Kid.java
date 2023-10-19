@@ -7,6 +7,9 @@ import lombok.Data;
 public class Kid {
     private String id;
     private String name;
-    private Byte age;
+    private byte age;
+    private String gender;
+    private String city;
+
 
 }

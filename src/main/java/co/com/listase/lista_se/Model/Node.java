@@ -4,10 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
+
 public class Node {
+
+    private Kid data;
     private Node next;
-    private Object data;
 
-
+    public Node(Kid data) {
+        this.data = data;
+    }
 }
