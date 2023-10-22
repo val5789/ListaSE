@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ListaSeApplication {
+public class TadsApi {
 
     public static void main(String[] args) {
-        SpringApplication.run(ListaSeApplication.class, args);
+        SpringApplication.run(TadsApi.class, args);
     }
 
 }

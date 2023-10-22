@@ -6,6 +6,7 @@ import co.com.listase.lista_se.Model.Kid;
 import co.com.listase.lista_se.Model.ListaSE;
 import co.com.listase.lista_se.Model.Node;
 import co.com.listase.lista_se.Service.ListaSEService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class ListaSEController {
         );
     }
     @PostMapping
-    public ResponseEntity<String> addEnd(@RequestBody Kid kid){
+    public ResponseEntity<String> addEnd(@Valid @RequestBody Kid kid){
         // irian las validaciones de la entrada
         listaSEService.getKids().addKidToEnd(kid);
         return new ResponseEntity<String>(
@@ -35,14 +36,14 @@ public class ListaSEController {
     }
 
     @PostMapping(path = "/tostart")
-    public ResponseEntity<String> addToStart(@RequestBody Kid kid){
+    public ResponseEntity<String> addToStart(@Valid @RequestBody Kid kid){
         // irian las validaciones de la entrada
         listaSEService.getKids().addToStart(kid);
         return new ResponseEntity<String>(
                 "Adicionado exitosamente", HttpStatus.OK);
     }
     @PostMapping(path="/addposition/{posicion}")
-    public ResponseEntity<String> addPos( @RequestBody Kid kid, @PathVariable int posicion ){
+    public ResponseEntity<String> addPos( @Valid @RequestBody Kid kid, @PathVariable int posicion ){
         if (posicion<1){
             return new ResponseEntity<>("Posicion no valida",HttpStatus.BAD_REQUEST);
         }
@@ -108,7 +109,7 @@ public class ListaSEController {
 
     }
     @PutMapping(path="/updateinpos/{posicion}")
-    public ResponseEntity<String> updateInPos(@PathVariable int posicion,@RequestBody Kid kid){
+    public ResponseEntity<String> updateInPos(@PathVariable int posicion,@Valid @RequestBody Kid kid){
         listaSEService.getKids().updateInPos(posicion,kid);
         return new ResponseEntity<String>(
                 "actualizado exitosamente", HttpStatus.OK);
