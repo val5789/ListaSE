@@ -18,11 +18,11 @@ public class ListaSEService {
     public ListaSEService() {
         //Simular que leyo un archivo o una base de datos
         kids = new ListaSE();
-        kids.addKidToEnd(new Kid("1006", "Valeria Osorio", (byte) 20,"Female",new City("17001","Manizales")));
-        kids.addKidToEnd(new Kid("1007", "Jhair Torres", (byte)18 ,"Male",new City("05001","Medellin")));
-        kids.addKidToEnd(new Kid("1003", "John Jaime", (byte) 18,"Male",new City("05091","Betania")));
-        kids.addKidToEnd(new Kid("1004", "Sergio Nuñez", (byte) 19,"Male",new City("11001","Bogota")));
-        kids.addKidToEnd(new Kid("1008", "Sebastian Rugeles", (byte) 19,"Male",new City("17001","Manizales")));
+        kids.addKidToEnd(new Kid("1006", "Valeria Osorio", (byte) 20,"Female",new City("17001","Manizales"),"private"));
+        kids.addKidToEnd(new Kid("1007", "Jhair Torres", (byte)18 ,"Male",new City("05001","Medellin"),"public"));
+        kids.addKidToEnd(new Kid("1003", "John Jaime", (byte) 18,"Male",new City("05091","Betania"),"private"));
+        kids.addKidToEnd(new Kid("1004", "Sergio Nuñez", (byte) 19,"Male",new City("11001","Bogota"),"public"));
+        kids.addKidToEnd(new Kid("1008", "Sebastian Rugeles", (byte) 19,"Male",new City("17001","Manizales"),"NA"));
 
     }
 

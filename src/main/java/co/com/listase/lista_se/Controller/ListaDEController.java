@@ -6,6 +6,7 @@ import co.com.listase.lista_se.Model.Kid;
 import co.com.listase.lista_se.Model.ListaDE;
 import co.com.listase.lista_se.Model.Node;
 import co.com.listase.lista_se.Service.ListaDEService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,17 +33,17 @@ public class ListaDEController {
         }
     }
     @PostMapping(path = "/add")
-    public ResponseEntity<ResponseDTO> addToFinal(@RequestBody Kid kid){
+    public ResponseEntity<ResponseDTO> addToFinal(@RequestBody @Valid Kid kid){
         return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
                 listaDEService.addKidToEnd(kid),null),HttpStatus.OK);
     }
     @PostMapping(path = "/addtostart")
-    public ResponseEntity<ResponseDTO> addToStart(@RequestBody Kid kid){
+    public ResponseEntity<ResponseDTO> addToStart(@RequestBody @Valid Kid kid){
         return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
                 listaDEService.addKidToStart(kid),null),HttpStatus.OK);
     }
     @PostMapping(path="/insertinpos/{pos}")
-    public ResponseEntity<ResponseDTO> insertInPos(@PathVariable int pos, @RequestBody Kid kid){
+    public ResponseEntity<ResponseDTO> insertInPos(@PathVariable int pos, @RequestBody @Valid Kid kid){
         return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
                 listaDEService.insertInPos(pos,kid),null),HttpStatus.OK);
     }
@@ -112,6 +113,22 @@ public class ListaDEController {
             errors.add(output);
             return new ResponseEntity<>(new ResponseDTO(HttpStatus.BAD_REQUEST.value(),
                     null,errors),HttpStatus.OK);
+        }
+    }
+
+
+    @GetMapping(path = "/reportde")
+    public ResponseEntity<ResponseDTO> SchoolReport(){
+        Object output = null;
+        try {
+            return new ResponseEntity<>(new ResponseDTO(HttpStatus.OK.value(),
+                    listaDEService.SchoolReport(),null),HttpStatus.OK);
+        } catch (KidsException e) {
+            List<String> errors = new ArrayList<>();
+            errors.add(e.getMessage());
+            return new ResponseEntity<>(new ResponseDTO(HttpStatus.NO_CONTENT.value(),
+                    null,errors),HttpStatus.OK);
+
         }
     }
 }

@@ -1,5 +1,6 @@
 package co.com.listase.lista_se.Model;
 
+import co.com.listase.lista_se.Controller.DTO.*;
 import co.com.listase.lista_se.Exception.KidsException;
 import lombok.Data;
 
@@ -23,8 +24,9 @@ public class ListaDE {
             }
             temp.setNext(newNode);
             newNode.setPrevious(temp);
-            this.size++;
+
         }
+        this.size++;
     }
 
 
@@ -55,8 +57,9 @@ public class ListaDE {
             newHead.setPrevious(null);
             this.head.setPrevious(newHead);
             this.head=newHead;
-            this.size++;
+
         }
+        this.size++;
     }
 
     public void insertInPos(int pos, Kid kid) {
@@ -171,7 +174,12 @@ public class ListaDE {
                 if (temp.getData().getId().equals(id)) {
                     NodeDE previous = temp.getPrevious();
                     previous.setNext(temp.getNext());
-                    temp.getNext().setPrevious(previous);
+                    if (temp.getNext()!=null){
+                        temp.getNext().setPrevious(previous);
+                    }
+
+
+                    break;
                 }
                 temp = temp.getNext();
             }
@@ -219,8 +227,179 @@ public class ListaDE {
             NodeDE previous = temp.getPrevious();
             temp.setPrevious(null);
             previous.setNext(temp.getNext());
+
+            if (temp.getNext() != null){
+                temp.getNext().setPrevious(previous);
+            }
+
+
         }
 
         this.size--;
     }
+
+
+    public List<String> getCities() {
+        NodeDE temp = this.head;
+        List<String> cities = new ArrayList<>();
+
+        while (temp != null) {
+            String city = temp.getData().getCityname().getCity();
+            if (!cities.contains(city)) {
+                cities.add(city);
+            }
+            temp = temp.getNext();
+        }
+
+        return cities;
+    }
+
+
+
+    public List<DataReportListaDEDTO> SchoolReport() throws KidsException{
+        if(this.head==null){
+            throw new KidsException("Lista vacía");
+        } else {
+            List<String>  cities = this.getCities();
+
+            List<DataReportListaDEDTO> finalReport = new ArrayList<>();
+
+
+            for(String city :cities){
+                int total_city_count=0;//CUENTA EL TOTAL DE PERSONAS EN LA CIUDAD
+                int schoolmale_count=0;//CUENTA LOS HOMBRES EN ESCUELAS
+                int schoolfemale_count=0;//CUENTA LAS MUJERES EN ESCUELAS
+                int malepublic_count=0;//CUENTA HOMBRES EN ESCUELAS PUBLICAS
+                int maleprivate_count=0;//CUENTA HOMBRES EN ESCUELAS PRIVADAS
+                int femalepublic_count=0;//CUENTA MUJERES EN PUBLICAS
+                int femaleprivate_count=0;//CUENTA MUJERES EN PRIVADAS
+
+                NodeDE temp = this.head;
+                while(temp!=null){
+                    if(temp.getData().getCityname().getCity().equals(city)){
+                        System.out.println("------");
+                        System.out.println(temp.getData());
+                        System.out.println("----");
+                        System.out.println(city);
+                        if(temp.getData().getGender().equals("Male")&&
+                                temp.getData().getSchool().equals("public")){
+                            schoolmale_count++;
+                            total_city_count++;
+
+                            System.out.println("Male");
+                            System.out.println("---");
+                            System.out.println(temp.getData());
+                            System.out.println("----");
+                            System.out.println("Public School");
+                            malepublic_count++;
+                            System.out.println("----");
+                            System.out.println("value: "+malepublic_count);
+
+                        }
+                        if(temp.getData().getGender().equals("Male")&&
+                                temp.getData().getSchool().equals("private")) {
+                            schoolmale_count++;
+                            total_city_count++;
+
+                            System.out.println("Male");
+                            System.out.println("---");
+                            System.out.println(temp.getData());
+                            System.out.println("----");
+                            System.out.println("Private School");
+                            maleprivate_count++;
+                            System.out.println("----");
+                            System.out.println("value: " + maleprivate_count);
+                        }
+                        if(temp.getData().getGender().equals("Male")&&
+                                temp.getData().getSchool().equals("No school")) {
+
+                            total_city_count++;
+
+                            System.out.println("Male");
+                            System.out.println("---");
+                            System.out.println(temp.getData());
+                            System.out.println("----");
+                            System.out.println("No School");
+
+                        }
+                        if(temp.getData().getGender().equals("Female")&&
+                                temp.getData().getSchool().equals("public")){
+                            schoolfemale_count++;
+                            total_city_count++;
+
+                            System.out.println("Female");
+                            System.out.println("---");
+                            System.out.println(temp.getData());
+                            System.out.println("----");
+                            System.out.println("Public School");
+                            femalepublic_count++;
+                            System.out.println("----");
+                            System.out.println("value: "+femalepublic_count);
+
+                        }
+                        if(temp.getData().getGender().equals("Female")&&
+                                temp.getData().getSchool().equals("private")) {
+                            schoolfemale_count++;
+                            total_city_count++;
+
+                            System.out.println("Female");
+                            System.out.println("---");
+                            System.out.println(temp.getData());
+                            System.out.println("----");
+                            System.out.println("Private School");
+                            femaleprivate_count++;
+                            System.out.println("----");
+                            System.out.println("value: " + femaleprivate_count);
+                        }
+                        if(temp.getData().getGender().equals("Female")&&
+                                temp.getData().getSchool().equals("No school")) {
+
+                            total_city_count++;
+
+                            System.out.println("Female");
+                            System.out.println("---");
+                            System.out.println(temp.getData());
+                            System.out.println("----");
+                            System.out.println("No School");
+
+                        }
+
+
+
+                        //System.out.println("New total count in"+city+"-----"+total_city_count);
+                    }
+                    //System.out.println("Female in shcool"+schoolfemale_count);
+                    //System.out.println("Male in shcool"+schoolmale_count);
+                    //System.out.println("New total count in"+city+"-----"+total_city_count);
+
+                    temp = temp.getNext();
+                }
+                //set list for male
+
+                List<SchoolStructureListDEDTO> SchoolMales = new ArrayList<>();
+                SchoolMales.add(new SchoolStructureListDEDTO("Public",malepublic_count));
+                SchoolMales.add(new SchoolStructureListDEDTO("Private",maleprivate_count));
+
+                //set list for female
+
+                List<SchoolStructureListDEDTO> SchoolFemales= new ArrayList<>();
+                SchoolFemales.add(new SchoolStructureListDEDTO("Public",femalepublic_count));
+                SchoolFemales.add(new SchoolStructureListDEDTO("Private",femaleprivate_count));
+
+                //DIVIDE BY GENDER
+
+                List<GenderStructrureListDEDTO> genders =new ArrayList<>();
+                genders.add(new GenderStructrureListDEDTO("Male",SchoolMales,schoolmale_count));
+                genders.add(new GenderStructrureListDEDTO("Female",SchoolFemales,schoolfemale_count));
+                // Objeto para final report
+                finalReport.add(new DataReportListaDEDTO(city,total_city_count,genders));
+
+
+            }
+
+            return finalReport;
+        }
+    }
+
+
 }
